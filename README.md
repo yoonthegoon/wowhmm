@@ -2,7 +2,7 @@
 
 Who owes [whom](https://en.wiktionary.org/wiki/whom#Usage_notes) how much money?
 
-![wowhmm](https://github.com/yoonthegoon/wowhmm/media/wowhmm.png)
+![wowhmm](https://github.com/yoonthegoon/wowhmm/blob/main/media/wowhmm.png?raw=true)
 
 ## Installation
 
