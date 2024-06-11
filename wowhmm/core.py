@@ -3,7 +3,7 @@ from typing import List, NamedTuple
 import pandas as pd
 
 
-class Spent(NamedTuple):
+class Spend(NamedTuple):
     """
     Who spent amount for whom.
 
@@ -18,7 +18,7 @@ class Spent(NamedTuple):
 
 
 class Ledger:
-    def __init__(self, transactions: List[Spent] = None):
+    def __init__(self, transactions: List[Spend] = None):
         """
         A ledger of transactions.
 
@@ -26,9 +26,9 @@ class Ledger:
         """
 
         self.transactions = transactions or []
-        if not all(isinstance(transaction, Spent) for transaction in self.transactions):
+        if not all(isinstance(transaction, Spend) for transaction in self.transactions):
             self.transactions = [
-                Spent(who, amount, for_whom) for who, amount, for_whom in transactions
+                Spend(who, amount, for_whom) for who, amount, for_whom in transactions
             ]
 
     def tabulate(self) -> pd.DataFrame:
