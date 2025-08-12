@@ -12,11 +12,13 @@ Who owes [whom](https://en.wiktionary.org/wiki/whom#Usage_notes) how much money?
 pip install wowhmm
 ```
 
+**Note:** This package has no external dependencies and uses only Python standard library.
+
 ## Usage
 
 You first provide a list of who spent how much on whom.
 In the example below, Alice spent $349.95 on a BnB for everyone.
-To figure out the net amount owed to and from each person, call `tabulate` to return a `pandas.DataFrame`.
+To figure out the net amount owed to and from each person, call `tabulate` to return an `OwingTable`.
 
 ```python
 >>> from wowhmm import Ledger
