@@ -1,6 +1,41 @@
-from typing import List, NamedTuple
+from typing import List, NamedTuple, Dict
 
-import pandas as pd
+
+class OwingTable:
+    """
+    A table-like structure to track who owes whom how much money.
+    Replacement for pandas DataFrame for this specific use case.
+    """
+    
+    def __init__(self, data: Dict[str, Dict[str, float]], index: List[str], columns: List[str]):
+        self.data = data
+        self.index = index
+        self.columns = columns
+    
+    def __str__(self) -> str:
+        """String representation of the owing table."""
+        # Calculate column widths
+        header_width = max(len(name) for name in self.index)
+        
+        # Build the header row
+        result = [' ' * header_width]
+        for col in self.columns:
+            result.append(f"{col:>8}")
+        header = '  '.join(result) + '\n'
+        
+        # Build data rows
+        rows = []
+        for row_name in self.index:
+            row = [f"{row_name:<{header_width}}"]
+            for col_name in self.columns:
+                value = self.data[row_name][col_name]
+                row.append(f"{value:8.2f}")
+            rows.append('  '.join(row))
+        
+        return header + '\n'.join(rows)
+    
+    def __repr__(self) -> str:
+        return self.__str__()
 
 
 class Spend(NamedTuple):
@@ -31,13 +66,13 @@ class Ledger:
                 Spend(who, amount, for_whom) for who, amount, for_whom in transactions
             ]
 
-    def tabulate(self) -> pd.DataFrame:
+    def tabulate(self) -> OwingTable:
         """
         Tabulate who owes whom how much.
         Values are negative if the person owes money and positive if the person is owed money.
         Values are rounded to two decimal places.
 
-        :return: A DataFrame of who owes whom how much
+        :return: An OwingTable of who owes whom how much
         """
 
         names = set(
@@ -46,13 +81,14 @@ class Ledger:
         names.update(transaction[0] for transaction in self.transactions)
         names = sorted(names)
 
-        df = pd.DataFrame(0.0, index=names, columns=names)
+        # Initialize data structure
+        data = {name: {other_name: 0.0 for other_name in names} for name in names}
 
         for payer, amount, payees in self.transactions:
             for payee in payees:
                 if payer != payee:
                     value = round(amount / len(payees), 2)
-                    df.loc[payer, payee] -= value
-                    df.loc[payee, payer] += value
+                    data[payer][payee] -= value
+                    data[payee][payer] += value
 
-        return df
+        return OwingTable(data, names, names)
