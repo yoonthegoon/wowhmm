@@ -1,6 +1,4 @@
-from typing import List, NamedTuple
-
-import pandas as pd
+from typing import List, NamedTuple, Dict
 
 
 class Spend(NamedTuple):
@@ -31,13 +29,13 @@ class Ledger:
                 Spend(who, amount, for_whom) for who, amount, for_whom in transactions
             ]
 
-    def tabulate(self) -> pd.DataFrame:
+    def tabulate(self) -> Dict[str, Dict[str, float]]:
         """
         Tabulate who owes whom how much.
         Values are negative if the person owes money and positive if the person is owed money.
         Values are rounded to two decimal places.
 
-        :return: A DataFrame of who owes whom how much
+        :return: A dictionary of dictionaries representing who owes whom how much
         """
 
         names = set(
@@ -46,13 +44,14 @@ class Ledger:
         names.update(transaction[0] for transaction in self.transactions)
         names = sorted(names)
 
-        df = pd.DataFrame(0.0, index=names, columns=names)
+        # Create nested dictionary structure similar to DataFrame
+        result = {name: {other_name: 0.0 for other_name in names} for name in names}
 
         for payer, amount, payees in self.transactions:
             for payee in payees:
                 if payer != payee:
                     value = round(amount / len(payees), 2)
-                    df.loc[payer, payee] -= value
-                    df.loc[payee, payer] += value
+                    result[payer][payee] -= value
+                    result[payee][payer] += value
 
-        return df
+        return result
