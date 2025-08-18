@@ -1,0 +1,22 @@
+[package]
+name = "wowhmm"
+version = "0.1.5"
+edition = "2021"
+authors = ["yoonthegoon <yoonthegoon@users.noreply.github.com>"]
+description = "Who owes whom how much money"
+license = "MIT"
+repository = "https://github.com/yoonthegoon/wowhmm"
+homepage = "https://github.com/yoonthegoon/wowhmm"
+readme = "README.md"
+keywords = ["finance", "ledger", "money", "debt", "splitting"]
+categories = ["finance"]
+
+[dependencies]
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+[[bin]]
+name = "wowhmm"
+path = "src/main.rs"
+
+[dev-dependencies]
