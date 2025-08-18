@@ -12,6 +12,28 @@ Who owes [whom](https://en.wiktionary.org/wiki/whom#Usage_notes) how much money?
 pip install wowhmm
 ```
 
+## Development
+
+This project uses [uv](https://docs.astral.sh/uv/) for dependency management. To set up the development environment:
+
+```bash
+# Install uv if you haven't already
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# Clone the repository
+git clone https://github.com/yoonthegoon/wowhmm.git
+cd wowhmm
+
+# Install dependencies and create virtual environment
+uv sync
+
+# Activate the virtual environment
+source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+
+# Build the package
+uv build
+```
+
 ## Usage
 
 You first provide a list of who spent how much on whom.
