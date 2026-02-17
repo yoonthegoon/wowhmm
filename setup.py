@@ -12,6 +12,6 @@ setup(
     url="https://github.com/yoonthegoon/wowhmm",
     packages=find_packages(),
     install_requires=[
-        "pandas==2.2.2",
+        # No external dependencies required
     ],
 )
