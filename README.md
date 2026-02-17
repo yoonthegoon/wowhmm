@@ -38,7 +38,7 @@ uv build
 
 You first provide a list of who spent how much on whom.
 In the example below, Alice spent $349.95 on a BnB for everyone.
-To figure out the net amount owed to and from each person, call `tabulate` to return a `pandas.DataFrame`.
+To figure out the net amount owed to and from each person, call `tabulate` to return a formatted table.
 
 ```python
 >>> from wowhmm import Ledger

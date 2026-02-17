@@ -11,7 +11,5 @@ setup(
     long_description_content_type="text/markdown",
     url="https://github.com/yoonthegoon/wowhmm",
     packages=find_packages(),
-    install_requires=[
-        "pandas==2.2.2",
-    ],
+    install_requires=[],
 )
